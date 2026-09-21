@@ -32,6 +32,7 @@ public class Servidor {
 
                 // 4. executa a tarefa escolhida pelo cliente
                 if (mensagemRecebida.contains(":")) {
+                    // divide a msg em opção e texto
                     String[] partes = mensagemRecebida.split(":", 2);
                     String opcao = partes[0].trim();
                     String texto = partes[1].trim();

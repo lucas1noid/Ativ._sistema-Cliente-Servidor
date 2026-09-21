@@ -16,17 +16,15 @@ public class Servidor {
             BufferedReader entrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter saida = new PrintWriter(socket.getOutputStream(), true);
 
-            // 3. Lê a tarefa enviada pelo cliente
+            // 3. Lê a mensagem enviada pelo cliente
             String mensagemRecebida = entrada.readLine();
             System.out.println("Recebido do cliente: " + mensagemRecebida);
 
-            // 4. Executa a tarefa
+            // 4. Converte para maiúsculas e envia de volta
             String resposta = mensagemRecebida.toUpperCase();
+            saida.println(resposta);
 
-            // 5. Envia a resposta de volta ao cliente
-            saida.println("RESPOSTA DO SERVIDOR: " + resposta);
-
-            // 6. Encerra a conexão
+            // 5. Encerra a conexão
             socket.close();
             System.out.println("Atendimento finalizado.");
 

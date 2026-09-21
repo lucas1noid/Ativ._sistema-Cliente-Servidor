@@ -1,29 +1,33 @@
 import java.io.*;
 import java.net.*;
+import java.util.Scanner; // Import do Scanner
 
 public class Cliente {
     public static void main(String[] args) {
-        String ipServidor = "127.0.0.1"; // Localhost
+        String ipServidor = "127.0.0.1";
         int portaServidor = 12345;
 
-        try (Socket socket = new Socket(ipServidor, portaServidor)) {
-            System.out.println("Conectado ao servidor!");
-
-            // 1. Configura a leitura e envio de dados
+        try (
+            Socket socket = new Socket(ipServidor, portaServidor);
             PrintWriter saida = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader entrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            Scanner teclado = new Scanner(System.in) // leitor
+        ) {
+            System.out.println("Conectado ao servidor!");
 
-            // 2. Envia a solicitação/tarefa para o servidor
-            String minhaTarefa = "redes de computadores com o Prof. Augusto";
-            System.out.println("Enviando tarefa: " + minhaTarefa);
+            // 1. Solicita e lê o texto do usuário
+            System.out.print("Digite uma frase para enviar: ");
+            String minhaTarefa = teclado.nextLine();
+
+            // 2. Envia a frase digitada para o servidor
             saida.println(minhaTarefa);
 
-            // 3. Aguarda e lê a resposta do servidor
+            // 3. Aguarda e le a resposta do servidor
             String resposta = entrada.readLine();
-            System.out.println("Recebido: " + resposta);
+            System.out.println("Servidor respondeu: " + resposta);
 
         } catch (IOException e) {
-            e.printStackTrace();// Trata de erros 
+            e.printStackTrace();// Trata de erros
         }
     }
 }

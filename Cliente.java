@@ -1,6 +1,6 @@
 import java.io.*;
 import java.net.*;
-import java.util.Scanner; // Import do Scanner
+import java.util.Scanner;
 
 public class Cliente {
     public static void main(String[] args) {
@@ -13,18 +13,25 @@ public class Cliente {
             BufferedReader entrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             Scanner teclado = new Scanner(System.in) // leitor
         ) {
-            System.out.println("Conectado ao servidor!");
+            System.out.println("  Conectado ao Servidor TCP");
+            System.out.println("Escolha uma funcionalidade:");
+            System.out.println("  [1] Converter para Maiúsculas");
+            System.out.println("  [2] Ordenar em Ordem Alfabética");
+            System.out.println("  [3] Inverter Texto");
 
-            // 1. Solicita e lê o texto do usuário
-            System.out.print("Digite uma frase para enviar: ");
-            String minhaTarefa = teclado.nextLine();
+            // 1. Solicita as informações ao user
+            System.out.print("Digite o número da opção (1, 2 ou 3): ");
+            String opcao = teclado.nextLine();
 
-            // 2. Envia a frase digitada para o servidor
-            saida.println(minhaTarefa);
+            System.out.print("Digite o texto de entrada: ");
+            String texto = teclado.nextLine();
+
+            // 2. Envia a tarefa para o servidor
+            saida.println(opcao + ":" + texto);
 
             // 3. Aguarda e le a resposta do servidor
             String resposta = entrada.readLine();
-            System.out.println("Servidor respondeu: " + resposta);
+            System.out.println("\nServidor respondeu:\n" + resposta);
 
         } catch (IOException e) {
             e.printStackTrace();// Trata de erros

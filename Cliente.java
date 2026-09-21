@@ -13,28 +13,40 @@ public class Cliente {
             BufferedReader entrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             Scanner teclado = new Scanner(System.in) // leitor
         ) {
-            System.out.println("  Conectado ao Servidor TCP");
-            System.out.println("Escolha uma funcionalidade:");
-            System.out.println("  [1] Converter para Maiúsculas");
-            System.out.println("  [2] Ordenar em Ordem Alfabética");
-            System.out.println("  [3] Inverter Texto");
+            System.out.println("  Conectado ao Servidor TCP em " + ipServidor + ":" + portaServidor);
 
-            // 1. Solicita as informações ao user
-            System.out.print("Digite o número da opção (1, 2 ou 3): ");
-            String opcao = teclado.nextLine();
+            while (true) {
+                System.out.println("\nEscolha uma funcionalidade:");
+                System.out.println("  [1] Converter para Maiúsculas");
+                System.out.println("  [2] Ordenar em Ordem Alfabética");
+                System.out.println("  [3] Inverter Texto");
+                System.out.println("  Digite 'SAIR' para encerrar.");
 
-            System.out.print("Digite o texto de entrada: ");
-            String texto = teclado.nextLine();
+                // 1. Solicita as informações ao user
+                System.out.print("Digite o número da opção (1, 2, 3 ou SAIR): ");
+                String opcao = teclado.nextLine().trim();
 
-            // 2. Envia a tarefa para o servidor
-            saida.println(opcao + ":" + texto);
+                if (opcao.equalsIgnoreCase("SAIR")) {
+                    saida.println("SAIR");
+                    String respostaFinal = entrada.readLine();
+                    System.out.println("\nServidor respondeu: " + respostaFinal);
+                    break;
+                }
 
-            // 3. Aguarda e le a resposta do servidor
-            String resposta = entrada.readLine();
-            System.out.println("\nServidor respondeu:\n" + resposta);
+                System.out.print("Digite o texto de entrada: ");
+                String texto = teclado.nextLine();
+
+                // 2. Envia a tarefa para o servidor
+                saida.println(opcao + ":" + texto);
+
+                // 3. Aguarda e le a resposta do servidor
+                String resposta = entrada.readLine();
+                System.out.println("\nServidor respondeu:\n" + resposta);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();// Trata de erros
         }
     }
+//NOID
 }
